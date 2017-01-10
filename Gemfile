@@ -20,22 +20,24 @@ gem 'puma', '~> 3.0'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 
-# Coverage
-gem "simplecov", "~> 0.12.0"
-
-# For tests validates and associations model
-gem "shoulda-matchers", "~> 3.1.1"
-
-# Cleaning up test db 
-gem 'database_cleaner', '~> 1.5.3'
-
-# For generating random test data
-gem 'factory_girl_rails'   
-
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
+  gem 'rspec-rails', '~> 3.5'
+  # For generating random test data
+  gem 'factory_girl_rails' , "~> 4.0"
+
+end
+
+group :test do
+  # Cleaning up test db
+  gem 'database_cleaner', '~> 1.5.3'
+  # Coverage
+  gem "simplecov", "~> 0.12.0"
+  # For tests validates and associations model
+  gem "shoulda-matchers", "~> 3.1.1"
+
 end
 
 group :development do
