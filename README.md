@@ -1,24 +1,22 @@
-# README
+# Project Management
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+	A aplicação é um gerenciador de projetos de arquitetura. Deverá ser uma API REST com Rails, com os seguintes endpoints.
 
-Things you may want to cover:
+* O sistema deve permitir criar, editar um projeto.
 
-* Ruby version
+* Um projeto deverá ter um nome, cliente, data de conclusão e estado.
 
-* System dependencies
+* Um projeto poderá receber várias notas. Estas notas que poderão ou não alterar o estado do projeto.
 
-* Configuration
+* Deverá haver também um endpoint para marcar o estado do projeto como "concluído", e a data da conclusão deve ser guardada.
 
-* Database creation
+* Os projetos e suas notas nunca devem ser apagadas, mas ao remover um projeto ou uma nota ela deve ser marcada como arquivada na base de dados.
 
-* Database initialization
+* Deve salvar data em que um projeto ou uma nota foi arquivada.
 
-* How to run the test suite
+* Projetos e Notas arquivadas não devem ser incluídas na lista de projetos.
 
-* Services (job queues, cache servers, search engines, etc.)
+* Permitir que um ou mais projetos sejam arquivados em uma única requisição.
 
-* Deployment instructions
+* A lista de projetos e a lista de notas de um projeto deve ser ordenada por data de criação em ordem decrescente.
 
-* ...
