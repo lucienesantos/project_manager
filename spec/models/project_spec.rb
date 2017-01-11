@@ -4,6 +4,7 @@ RSpec.describe Project, type: :model do
 
   context "Associations" do
     it {is_expected.to belong_to(:client)}
+    it {is_expected.to have_many(:notes)}
   end
 
   context "Validations" do
