@@ -62,7 +62,7 @@ RSpec.describe Api::V1::ProjectsController, type: :controller do
 
     end
 
-    context "whit invalids attributes" do
+    context "with invalids attributes" do
       let(:project_params) do
         {
           project: {
@@ -83,4 +83,46 @@ RSpec.describe Api::V1::ProjectsController, type: :controller do
     end
   end
 
-end
+  describe "PUT #update" do
+    let(:project){create(:project)}
+    let(:client){ create(:client) }
+
+    context "with valids attributes" do
+      let(:project_params) do
+        {
+          project: {
+             name: "Bradesco's Project",
+          },
+          id: project.id,
+        }
+      end
+
+      it "request return success" do
+        put :update, params: project_params
+        expect(response.status).to eq(200)
+      end
+
+      it "should return project updated" do
+        put :update, params: project_params
+        body = JSON.parse(response.body)
+        expect(body["project"]["name"]).to eq("Bradesco's Project")
+      end
+    end
+
+    context "with invalids attributes"
+      let(:project_params) do
+        {
+          project: {
+             conclusion_at: "1",
+          },
+          id: project.id,
+        }
+      end
+
+      it "return error code" do
+        put :update, params: project_params
+        expect(response.status).to eq(422)
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+  end
