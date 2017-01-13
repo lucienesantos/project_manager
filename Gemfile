@@ -38,6 +38,8 @@ group :test do
   # For tests validates and associations model
   gem "shoulda-matchers", "~> 3.1.1"
 
+  gem "timecop", "~> 0.8.0"
+
 end
 
 group :development do
