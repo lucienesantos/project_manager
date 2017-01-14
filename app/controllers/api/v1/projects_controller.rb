@@ -30,10 +30,21 @@ class Api::V1::ProjectsController < ApplicationController
 
   end
 
+  def conclude
+    project = Project.find(params[:id])
+    if project.conclude
+      render json: {project: project}
+    else
+      render json: { errors: project.errors.full_messages }, status: :unprocessable_entity
+    end
+
+  end
+
+
   private
 
     def project_params
       params.require(:project).permit(:name, :conclusion_at, :client_id)
     end
-  
+
 end

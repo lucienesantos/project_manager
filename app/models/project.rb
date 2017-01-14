@@ -1,6 +1,6 @@
 class Project < ApplicationRecord
 
-  STATES = ["started", "approving", "building", "completed", "concluded" ]
+  STATES = ["started", "approving", "building", "concluded" ]
 
   belongs_to :client
   has_many :notes
@@ -9,5 +9,10 @@ class Project < ApplicationRecord
   validates :state, inclusion: { in: STATES }
 
   scope :sort_by_creation, -> { order(created_at: :DESC)}
+
+
+  def conclude
+    self.update({state: "concluded", conclusion_at: Time.zone.now })
+  end
 
 end

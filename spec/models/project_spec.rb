@@ -15,6 +15,18 @@ RSpec.describe Project, type: :model do
 
     it {is_expected.to validate_inclusion_of(:state).in_array(described_class::STATES)}
 
+  end
+
+  describe "#conclude" do
+    let(:project) {create(:project)}
+
+    it "should change state of the project and conclusion_at" do
+      Timecop.freeze(Date.today) do
+        project.conclude
+        expect(project.state).to eq("concluded")
+        expect(project.conclusion_at).to eq(Time.zone.now)
+      end
+    end
 
   end
 
