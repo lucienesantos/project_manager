@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       resources :projects do
         member do
           put :conclude
+          resources :notes, only: [:create]
         end
       end
     end
