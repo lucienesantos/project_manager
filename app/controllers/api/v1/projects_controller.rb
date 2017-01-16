@@ -31,11 +31,12 @@ class Api::V1::ProjectsController < ApplicationController
   end
 
   def conclude
-    project = Project.find(params[:id])
-    if project.conclude
+    begin
+      project = Project.find(params[:id])
+      project.conclude
       render json: {project: project}
-    else
-      render json: { errors: project.errors.full_messages }, status: :unprocessable_entity
+    rescue Exception => e
+        render json: { errors: e.message }, status: :unprocessable_entity
     end
 
   end
