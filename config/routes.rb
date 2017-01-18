@@ -6,12 +6,14 @@ Rails.application.routes.draw do
         member do
           put :conclude
 
-          resources :notes, only: [:create]
+          resources :notes do
+            member do
+              patch :archive
+            end
+          end
         end
       end
-
       match 'archive', to: 'projects#archive', via: [:patch]
-
     end
   end
 

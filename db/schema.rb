@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170114141901) do
+ActiveRecord::Schema.define(version: 20170117181531) do
 
   create_table "clients", force: :cascade do |t|
     t.string   "name",       null: false
@@ -19,11 +19,13 @@ ActiveRecord::Schema.define(version: 20170114141901) do
   end
 
   create_table "notes", force: :cascade do |t|
-    t.text     "content",          null: false
+    t.text     "content",                          null: false
     t.integer  "project_id"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.integer  "conclude_project"
+    t.boolean  "archived",         default: false
+    t.datetime "archived_at"
     t.index ["project_id"], name: "index_notes_on_project_id"
   end
 
@@ -34,6 +36,8 @@ ActiveRecord::Schema.define(version: 20170114141901) do
     t.integer  "client_id"
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
+    t.boolean  "archived",      default: false
+    t.datetime "archived_at"
     t.index ["client_id"], name: "index_projects_on_client_id"
   end
 

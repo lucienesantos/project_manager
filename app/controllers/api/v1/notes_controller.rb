@@ -8,7 +8,13 @@ class Api::V1::NotesController < ApplicationController
 		  render json: { note: note }, status: :created
 		rescue Exception => e
 			render json: { errors: e.message }, status: :unprocessable_entity
-		end	
+		end
+	end
+
+	def archive
+		note = Note.find(params[:id])
+		note.soft_delete
+    render json: note
 	end
 
 	private
