@@ -161,7 +161,6 @@ RSpec.describe Api::V1::ProjectsController, type: :controller do
     it "request return success" do
       patch :archive, params: {ids: [project.id]}
       expect(response.status).to eq(204)
-      expect(response).to have_http_status(204)
     end
   end
 
