@@ -155,7 +155,7 @@ RSpec.describe Api::V1::ProjectsController, type: :controller do
     end
   end
 
-  describe "PUT #archive" do
+  describe "PATCH #archive" do
     let(:project) { create(:project) }
 
     it "request return success" do
