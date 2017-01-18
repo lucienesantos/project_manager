@@ -39,4 +39,17 @@ RSpec.describe Project, type: :model do
       end
     end
   end
+
+  describe "#sort_by_creation" do
+    let!(:project_google){ create(:project, name: "Project's Google")}
+    let!(:project_firefox){ create(:project, name: "Project's Firefox")}
+    let!(:project_safari){ create(:project, name: "Project's Safari")}
+
+    it "should return projects by date create in order decrescent " do
+      projects = Project.sort_by_creation
+      expect(projects[0].name).to eq("Project's Safari")
+      expect(projects[1].name).to eq("Project's Firefox")
+      expect(projects[2].name).to eq("Project's Google")
+    end
+  end
 end

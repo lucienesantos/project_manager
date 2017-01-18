@@ -150,7 +150,7 @@ RSpec.describe Api::V1::ProjectsController, type: :controller do
       it "request return error message" do
         put :conclude, params: {id: 5}
         body = JSON.parse(response.body)
-        expect(body["errors"]).to eq("Couldn't find Project with 'id'=5")
+        expect(body["errors"]).to eq("Couldn't find Project with 'id'=5 [WHERE (archived = 'f')]")
       end
     end
   end

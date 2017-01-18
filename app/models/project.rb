@@ -9,6 +9,8 @@ class Project < ApplicationRecord
   validates :name, :state, :conclusion_at, :client, presence: true
   validates :state, inclusion: { in: STATES }
 
+  default_scope -> {where("archived = ?", false)}
+
   scope :sort_by_creation, -> { order(created_at: :DESC)}
 
   def conclude
