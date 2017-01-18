@@ -12,7 +12,6 @@ RSpec.describe Project, type: :model do
     it {is_expected.to validate_presence_of(:client)}
     it {is_expected.to validate_presence_of(:conclusion_at)}
     it {is_expected.to validate_presence_of(:client)}
-
     it {is_expected.to validate_inclusion_of(:state).in_array(described_class::STATES)}
 
   end
@@ -27,7 +26,17 @@ RSpec.describe Project, type: :model do
         expect(project.conclusion_at).to eq(Time.zone.now)
       end
     end
-
   end
 
+  describe "#soft_delete" do
+    let!(:project){ create(:project)}
+
+    it "should change archived end archived_at of project" do
+      Timecop.freeze(Date.today) do
+        project.soft_delete
+        expect(project.archived).to eq(true)
+        expect(project.archived_at).to eq(Time.zone.now)
+      end
+    end
+  end
 end

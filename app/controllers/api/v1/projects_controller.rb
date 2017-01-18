@@ -30,6 +30,12 @@ class Api::V1::ProjectsController < ApplicationController
 
   end
 
+  def archive
+    projects = Project.where(id: params[:ids])
+    projects.map(&:soft_delete)
+    render status: :no_content
+  end
+
   def conclude
     begin
       project = Project.find(params[:id])

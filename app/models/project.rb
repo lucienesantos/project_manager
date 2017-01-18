@@ -1,4 +1,5 @@
 class Project < ApplicationRecord
+    include SoftDeletable
 
   STATES = ["started", "approving", "building", "concluded" ]
 
@@ -9,7 +10,6 @@ class Project < ApplicationRecord
   validates :state, inclusion: { in: STATES }
 
   scope :sort_by_creation, -> { order(created_at: :DESC)}
-
 
   def conclude
     self.update({state: "concluded", conclusion_at: Time.zone.now })
