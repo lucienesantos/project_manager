@@ -68,4 +68,23 @@ RSpec.describe Api::V1::NotesController, type: :controller do
     end
   end
 
+  describe "GET #index" do
+    let(:client){create(:client)}
+    let(:project_bradesco){create(:project, client_id: client.id)}
+    let(:project_itau){create(:project, client_id: client.id)}
+
+    let!(:note_add_contract_itau){create(:note, project_id: project_itau.id, content: "Add contract Itau")}
+    let!(:note_add_employee_itau){create(:note, project_id: project_itau.id, content: "Add employee Itau")}
+    let!(:note_add_contract_bradesco){create(:note, project_id: project_bradesco.id, content: "Add contract Bradesco")}
+    let!(:note_remove_employee_itau){create(:note, project_id: project_itau.id, content: "Add employee Itau", archived: true)}
+
+    context "Notes archiveds" do
+      it "return count notes by project not archiveds and order by create date decrescent" do
+        get :index, params: {id: project_itau.id}
+        body = JSON.parse(response.body)
+        expect(body.count).to eq(2)
+      end
+    end
+  end
+
 end

@@ -1,5 +1,10 @@
 class Api::V1::NotesController < ApplicationController
 
+	def index
+		notes = Note.by_project_id(params[:id]).sort_by_creation
+		render json: notes
+	end
+
 	def create
 		begin
 			note = Note.new(notes_params)

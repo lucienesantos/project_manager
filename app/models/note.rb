@@ -7,6 +7,10 @@ class Note < ApplicationRecord
 
   before_create :complete_status_project
 
+  default_scope -> {where("archived = ?", false)}
+
+  scope :sort_by_creation, -> { order(created_at: :DESC)}
+
   scope :by_project_id, ->(project_id) {where("project_id = ?", project_id)}
 
 
