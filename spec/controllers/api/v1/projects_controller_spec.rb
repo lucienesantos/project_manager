@@ -10,18 +10,19 @@ RSpec.describe Api::V1::ProjectsController, type: :controller do
 
     context "When return content body" do
 
+      let!(:bv_project) { create(:project, name: "BV's Project", archived: true) }
       let!(:bradesco_project){ create(:project, name: "Bradesco's Project") }
       let!(:itau_project) { create(:project, name: "Itau's Project") }
       let!(:santander_project) { create(:project, name: "Santander's Project") }
 
       let(:body) { JSON.parse(response.body) }
 
-      it "returns projects count" do
+      it "returns projects count only not archived" do
         get :index
         expect(body.count).to eq(3)
       end
 
-      it "returns project ordened by date of created decrescent" do
+      it "returns project not archived ordened by date of created decrescent" do
         get :index
         expect(body[0]["name"]).to eq("Santander's Project")
         expect(body[1]["name"]).to eq("Itau's Project")

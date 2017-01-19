@@ -51,5 +51,16 @@ RSpec.describe Project, type: :model do
       expect(projects[1].name).to eq("Project's Firefox")
       expect(projects[2].name).to eq("Project's Google")
     end
+
+    context "with project archived" do
+      it "should return only project not archived " do
+
+        project_safari.soft_delete
+
+        projects = Project.sort_by_creation
+        expect(projects[0].name).to eq("Project's Firefox")
+        expect(projects[1].name).to eq("Project's Google")
+      end
+    end
   end
 end
