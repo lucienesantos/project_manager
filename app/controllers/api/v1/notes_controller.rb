@@ -17,7 +17,7 @@ class Api::V1::NotesController < ApplicationController
 	end
 
 	def archive
-		note = Note.find(params[:id])
+		note = Note.by_project_id(params[:id]).find(params[:note_id])
 		note.soft_delete
     render json: note
 	end
