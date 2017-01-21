@@ -152,24 +152,24 @@ RSpec.describe Api::V1::ProjectsController, type: :controller do
 
     context "with existing project"
       it "request return success" do
-        put :conclude, params: { id: project.id }
+        patch :conclude, params: { id: project.id }
         expect(response.status).to eq(200)
       end
 
     it "return project concluded" do
-      put :conclude, params: { id: project.id }
+      patch :conclude, params: { id: project.id }
       body = JSON.parse(response.body)
       expect(body["project"]["state"]).to eq("concluded")
     end
 
     context "with not existing id project" do
       it "request return error" do
-        put :conclude, params: {id: 5}
+        patch :conclude, params: {id: 5}
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
       it "request return error message" do
-        put :conclude, params: {id: 5}
+        patch :conclude, params: {id: 5}
         body = JSON.parse(response.body)
         expect(body["errors"]).to eq("Couldn't find Project with 'id'=5 [WHERE (archived = 'f')]")
       end

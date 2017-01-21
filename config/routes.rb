@@ -5,7 +5,7 @@ Rails.application.routes.draw do
       match 'projects/archive', to: 'projects#archive', via: [:patch]
       resources :projects do
         member do
-          put :conclude
+          patch :conclude
 
           resources :notes, only:[:index, :create]
           match '/notes/:note_id/archive', to: 'notes#archive', via: [:post]
