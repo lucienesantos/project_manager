@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       match 'projects/archive', to: 'projects#archive', via: [:patch]
-      resources :projects do
+      resources :projects, only: [:index, :create, :update] do
         member do
           patch :conclude
 
