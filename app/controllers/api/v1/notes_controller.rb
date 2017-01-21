@@ -1,8 +1,7 @@
 class Api::V1::NotesController < ApplicationController
 
 	def index
-		notes = Note.by_project_id(params[:id]).sort_by_creation
-		render json: notes
+		paginate json: Note.by_project_id(params[:id]).sort_by_creation, per_page: params[:per_page]
 	end
 
 	def create

@@ -69,16 +69,39 @@ RSpec.describe Api::V1::NotesController, type: :controller do
   end
 
   describe "GET #index" do
-    let(:client){create(:client)}
-    let(:project_bradesco){create(:project, client_id: client.id)}
-    let(:project_itau){create(:project, client_id: client.id)}
 
-    let!(:note_add_contract_itau){create(:note, project_id: project_itau.id, content: "Add contract Itau")}
-    let!(:note_add_employee_itau){create(:note, project_id: project_itau.id, content: "Add employee Itau")}
-    let!(:note_add_contract_bradesco){create(:note, project_id: project_bradesco.id, content: "Add contract Bradesco")}
-    let!(:note_remove_employee_itau){create(:note, project_id: project_itau.id, content: "Add employee Itau", archived: true)}
+    context "With 25 notes" do
+      let!(:client) {create(:client)}
+      let!(:project) {create(:project, client_id: client.id)}
+
+      before do
+        FactoryGirl.create_list(:note, 25, project_id: project.id)
+      end
+
+      it "should return only 20 projects on first page" do
+        get :index, params: {id: project.id, page: 1, per_page: 20}
+        body = JSON.parse(response.body)
+        expect(body.count).to eq(20)
+      end
+
+      it "should return only 5 notes" do
+        get :index, params: {id: project.id, page: 2, per_page: 20}
+        body = JSON.parse(response.body)
+        expect(body.count).to eq(5)
+      end
+    end
+
 
     context "Notes archiveds" do
+      let(:client){create(:client)}
+      let(:project_bradesco){create(:project, client_id: client.id)}
+      let(:project_itau){create(:project, client_id: client.id)}
+
+      let!(:note_add_contract_itau){create(:note, project_id: project_itau.id, content: "Add contract Itau")}
+      let!(:note_add_employee_itau){create(:note, project_id: project_itau.id, content: "Add employee Itau")}
+      let!(:note_add_contract_bradesco){create(:note, project_id: project_bradesco.id, content: "Add contract Bradesco")}
+      let!(:note_remove_employee_itau){create(:note, project_id: project_itau.id, content: "Add employee Itau", archived: true)}
+
       it "return count notes by project not archiveds and order by create date decrescent" do
         get :index, params: {id: project_itau.id}
         body = JSON.parse(response.body)
