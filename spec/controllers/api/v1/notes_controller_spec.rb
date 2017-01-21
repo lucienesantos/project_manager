@@ -53,16 +53,16 @@ RSpec.describe Api::V1::NotesController, type: :controller do
   end
 
   describe "PATCH #archive" do
-    let(:project){ create(:project) }
-    let!(:note){ create(:note, project_id: project.id )}
+    let(:project){ create(:project, id: 50) }
+    let!(:note){ create(:note, project_id: project.id, id: 33 )}
 
     it "request return success" do
-      patch :archive, params: {id: note.id}
+      patch :archive, params: {id: project.id, note_id: note.id }
       expect(response.status).to eq(200)
     end
 
     it "should change archived of note" do
-      patch :archive, params: {id: note.id }
+      patch :archive, params: {id: project.id, note_id: note.id}
       body = JSON.parse(response.body)
       expect(body["archived"]).to eq(true)
     end

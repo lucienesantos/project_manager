@@ -8,6 +8,25 @@ RSpec.describe Api::V1::ProjectsController, type: :controller do
       expect(response.status).to eq(200)
     end
 
+    context "With 25 projects" do
+
+      before do
+        FactoryGirl.create_list(:project, 25)
+      end
+
+      it "should return only 20 projects on first page" do
+        get :index, params: {page: 1, per_page: 20}
+        body = JSON.parse(response.body)
+        expect(body.count).to eq(20)
+      end
+
+      it "should return only 5 projects" do
+        get :index, params: {page: 2, per_page: 20}
+        body = JSON.parse(response.body)
+        expect(body.count).to eq(5)
+      end
+    end
+
     context "When return content body" do
 
       let!(:bv_project) { create(:project, name: "BV's Project", archived: true) }
@@ -18,17 +37,18 @@ RSpec.describe Api::V1::ProjectsController, type: :controller do
       let(:body) { JSON.parse(response.body) }
 
       it "returns projects count only not archived" do
-        get :index
+        get :index, params: { page: 1, per_page: 20 }
         expect(body.count).to eq(3)
       end
 
       it "returns project not archived ordened by date of created decrescent" do
-        get :index
+        get :index, params: { page: 1}
         expect(body[0]["name"]).to eq("Santander's Project")
         expect(body[1]["name"]).to eq("Itau's Project")
         expect(body[2]["name"]).to eq("Bradesco's Project")
       end
     end
+
   end
 
   describe "POST #create" do

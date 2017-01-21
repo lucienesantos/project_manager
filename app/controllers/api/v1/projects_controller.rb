@@ -1,8 +1,7 @@
 class Api::V1::ProjectsController < ApplicationController
 
   def index
-    projects = Project.all.sort_by_creation
-    render json: projects
+    paginate json: Project.all.sort_by_creation, per_page: params[:per_page]
   end
 
   def create

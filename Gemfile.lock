@@ -38,6 +38,7 @@ GEM
       i18n (~> 0.7)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    api-pagination (4.4.0)
     arel (7.1.4)
     builder (3.2.2)
     byebug (9.0.6)
@@ -56,6 +57,9 @@ GEM
       activesupport (>= 4.1.0)
     i18n (0.7.0)
     json (2.0.2)
+    kaminari (0.17.0)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -153,9 +157,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  api-pagination (~> 4.4.0)
   byebug
   database_cleaner (~> 1.5.3)
   factory_girl_rails (~> 4.0)
+  kaminari (~> 0.17.0)
   listen (~> 3.0.5)
   puma (~> 3.0)
   rails (~> 5.0.1)
