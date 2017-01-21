@@ -8,7 +8,7 @@ Rails.application.routes.draw do
           patch :conclude
 
           resources :notes, only:[:index, :create]
-          match '/notes/:note_id/archive', to: 'notes#archive', via: [:post]
+          match '/notes/:note_id/archive', to: 'notes#archive', via: [:patch]
         end
       end
     end
