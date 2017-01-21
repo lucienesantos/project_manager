@@ -1,22 +1,74 @@
-# Project Management
+## Project Management
+	
+	This is a Rails REST API to help in projects management
+	
+### Endpoints
 
-	A aplicação é um gerenciador de projetos de arquitetura. Deverá ser uma API REST com Rails, com os seguintes endpoints.
+The API provides the following endpoints:
 
-* O sistema deve permitir criar, editar um projeto.
+#### - GET /api/v1/projects
 
-* Um projeto deverá ter um nome, cliente, data de conclusão e estado.
+List of paginated projects
 
-* Um projeto poderá receber várias notas. Estas notas que poderão ou não alterar o estado do projeto.
+##### parameters:
+* **page:** number of the page current
+* **per_page:** number of projects per page
 
-* Deverá haver também um endpoint para marcar o estado do projeto como "concluído", e a data da conclusão deve ser guardada.
+#### - POST /api/v1/projects
 
-* Os projetos e suas notas nunca devem ser apagadas, mas ao remover um projeto ou uma nota ela deve ser marcada como arquivada na base de dados.
+Creates a project
 
-* Deve salvar data em que um projeto ou uma nota foi arquivada.
+##### parameters:
 
-* Projetos e Notas arquivadas não devem ser incluídas na lista de projetos.
+* **name:** the name of the project
+* **conclusion_at:** the deadline date of the project(expected format: yyyy/mm/dd)
+* **client_id:** id of the client that project belongs to
 
-* Permitir que um ou mais projetos sejam arquivados em uma única requisição.
+#### - PUT/PATCH /api/v1/projects/:id
 
-* A lista de projetos e a lista de notas de um projeto deve ser ordenada por data de criação em ordem decrescente.
+Updates the project by the given `id`
 
+##### parameters:
+
+* **name:** the name of the project
+* **conclusion_at:** the deadline date of the project(expected format: yyyy/mm/dd)
+* **client_id:** id of the client that project belongs to
+
+#### - PATCH /api/v1/projects/:id/conclude
+
+Updates the state to `concluded` of the project by the given `id`
+
+#### - PATCH /api/v1/projects/archive
+
+Updates the `archived` attribute to `true` and the `archived_at` of the project by the given `ids`
+This works as a soft 
+
+##### parameters:
+
+* **ids:** id or ids of the project that might be archived
+
+#### GET /api/v1/projects/:id/notes
+
+List of paginated notes of the project
+
+##### parameters:
+
+* **id:** id of the project that the note belongs to
+* **page:** number of the current page
+* **per_page:** number of notes per page
+
+#### - POST  /api/v1/projects/:id/notes
+
+Creates a note for a specific project
+If that notes should change the state of a project set `conclude_project`attribute for `true`
+
+##### parameters:
+
+* **project_id:** id of the project that the note belongs to
+* **content:** the content text of the note
+* **conclude_project:** if should conclude project
+
+#### - PATCH /api/v1/projects/:id/notes/:note_id/archive
+
+Updates the `archived` attribute to `true` and the `archived_at` of the note by the given `note_id`
+This works as a soft deletion
