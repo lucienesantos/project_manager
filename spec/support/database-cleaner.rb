@@ -1,11 +1,14 @@
 RSpec.configure do |config|
 
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
   config.before(:each) do
     DatabaseCleaner.strategy = :transaction
   end
 
-  # Clean up all jobs specs with truncation
-  config.before(:each, job: true) do
+  config.before(:each, :js => true) do
     DatabaseCleaner.strategy = :truncation
   end
 
@@ -17,4 +20,4 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
-end  
+end
